@@ -13,7 +13,15 @@ class Services {
     return dataSource[this.model].findByPk(id);
   }
 
-  async update(id) {}
+  async update(dados, id) {
+    const listaRegistrosAtualizados = dataSource[this.model].update(dados, { where: { id: id} });
+
+    if (listaRegistrosAtualizados[0] === 0){
+      return false;
+    }
+
+    return true;
+  }
 
   async postData(dados) {
     return dataSource[this.model].create(dados);

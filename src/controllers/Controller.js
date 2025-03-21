@@ -8,7 +8,7 @@ class Controller {
       const listaRegistros = await this.entidadeService.getAll();
       return res.status(200).json(listaRegistros);
     }catch(error){
-      //error
+      return res.status(401).json({mensagem: error});
     }
   }
 
@@ -20,12 +20,31 @@ class Controller {
         return res.status(200).json({mensagem:`id ${id} deletado com sucesso.`});
       }
     }catch(error){
-      console.log(error);
+      return res.status(401).json({mensagem: error});
     }
   }
 
   async updateById(req, res) {
-    // const { id } = req.params
+    const { id } = req.params;
+    const dados = req.body;
+    
+    if (id != null){
+      const isUpdate = await this.entidadeService.update(dados,Number(id));
+
+      if (!isUpdate){
+        return res.status(400).json({message: 'registro não foi atualizado'});
+      }
+      return res.status(200).json({message: 'Atualizado com sucesso'});
+    }
+  }
+
+  async post(req, res) {
+    try{
+      const body = req.body;
+      await this.entidadeService.postData(body);
+    }catch(error){
+      return res.status(401).json({mensagem: error});
+    }
   }
 }
 
