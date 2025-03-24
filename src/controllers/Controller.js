@@ -12,6 +12,16 @@ class Controller {
     }
   }
 
+  async get(req, res){
+    try{
+      const { estudanteId } = req.params;
+      const listaRegistros = await this.entidadeService.getById(estudanteId);
+      return res.status(200).json(listaRegistros);
+    }catch(error){
+      return res.status(401).json({mensagem: error});
+    }
+  }
+
   async exclui(req, res){
     const { id } = req.params;
     try{
@@ -42,7 +52,7 @@ class Controller {
     try{
       const body = req.body;
       await this.entidadeService.postData(body);
-      return res.status(200).json({message: 'registro inserido com sucesso!'});
+      return res.status(201).json({message: 'registro inserido com sucesso!'});
     }catch(error){
       return res.status(401).json({mensagem: error});
     }

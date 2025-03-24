@@ -1,7 +1,6 @@
 const express = require('express');
 const pessoas = require('./RoutePessoa');
 const cursos = require('./RouteCurso');
-const matriculas = require('./RouteMatricula');
 const categorias = require('./RouteCategoria');
 
 module.exports = app =>{
@@ -9,7 +8,6 @@ module.exports = app =>{
     express.json(),
     pessoas,
     cursos,
-    matriculas,
     categorias
   );
 };
