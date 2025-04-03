@@ -5,7 +5,7 @@ class Controller {
 
   async getAll(req, res){
     try{
-      const listaRegistros = await this.entidadeService.getAll();
+      const listaRegistros = await this.entidadeService.getAll(req.query.page);
       return res.status(200).json(listaRegistros);
     }catch(error){
       return res.status(401).json({mensagem: error});
