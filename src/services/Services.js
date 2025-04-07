@@ -5,8 +5,11 @@ class Services {
     this.model = nomeModel;
   }
 
-  async getAll() {
-    return dataSource[this.model].findAll();
+  async getAll(page) {
+    return dataSource[this.model].findAndCountAll({
+      limit: 10,
+      offset: (Number(page) - 1) * 10,
+    });
   }
 
   async getById(id) {
