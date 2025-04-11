@@ -1,4 +1,5 @@
 
+const { Op } = require('sequelize');
 const dataSource = require('../models');
 class Services {
   constructor(nomeModel){
@@ -9,6 +10,42 @@ class Services {
     return dataSource[this.model].findAndCountAll({
       limit: 10,
       offset: (Number(page) - 1) * 10,
+    });
+  }
+
+  async getByDescription(path, search){
+    let entityEnum = {
+      PESSOA:'pessoas',
+      MATRICULA: 'matricula',
+      CURSO: 'cursos',
+      CATEGORIA: 'categorias',
+    };
+    
+    let existeEntidade = false;
+
+    for (let key in entityEnum){
+      if (entityEnum[key] == path){
+        existeEntidade = true;
+      }
+    }
+
+    if (!existeEntidade){
+      throw('Erro de entidade não encontrada');
+    }
+
+    let busca = null;
+    
+    if (path == entityEnum.PESSOA){
+      busca = 'nome';
+    }
+    else if (path == entityEnum.CURSO || path == entityEnum.CATEGORIA){
+      busca = 'titulo';
+    }
+
+    return dataSource[this.model].findAll({
+      where: {[busca]: {
+        [Op.like]: `${search}%`
+      }}
     });
   }
 
