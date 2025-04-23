@@ -6,10 +6,11 @@ class Services {
     this.model = nomeModel;
   }
 
-  async getAll(page) {
+  async getAll(page, items, order) {
     return dataSource[this.model].findAndCountAll({
-      limit: 10,
-      offset: (Number(page) - 1) * 10,
+      limit: items,
+      offset: (Number(page) - 1) * items,
+      order: order.map(({column, asc}) => [column, asc === 'true' ? 'ASC' : 'DESC']),
     });
   }
 

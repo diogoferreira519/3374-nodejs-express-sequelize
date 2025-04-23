@@ -8,7 +8,7 @@ class Controller {
       let busca = req.query.search;
 
       if (!busca){
-        const listaRegistros = await this.entidadeService.getAll(req.query.page);
+        const listaRegistros = await this.entidadeService.getAll(req.query.page, req.query.items, req.query.order);
         return res.status(200).json(listaRegistros);
       }
       else{
