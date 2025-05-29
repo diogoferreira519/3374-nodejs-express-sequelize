@@ -1,11 +1,9 @@
 const { Router } = require('express');
-const ControllerLogin = require('../controllers/ControllerLogin');
+const ControllerUser = require('../controllers/ControllerUser');
 
-const loginController = new ControllerLogin();
+const userController = new ControllerUser();
 const router = Router();
 
-router.post('/users', (req, res)=> loginController.post(req,res));
-router.get('/users', (req, res)=> loginController.getAll(req, res));
-router.put('/users/:id', (req, res)=> loginController.updateById(req, res));
+router.post('/auth', (req, res)=> userController.postLogin(req,res));
 
 module.exports = router;

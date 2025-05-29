@@ -18,6 +18,12 @@ module.exports = {
       senha: {
         type: Sequelize.STRING
       },
+      cpf: {
+        type: Sequelize.STRING
+      },
+      ativo: {
+        type: Sequelize.BOOLEAN
+      },
       perfil: {
         type: Sequelize.NUMBER
       },
