@@ -29,14 +29,12 @@ class ServicesUser extends Services{
 
     const chave = process.env.JWT_SECRET;
 
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       {  id:user.id, nome: user.nome, email:user.email, perfil:user.perfil},
       chave,
-      {expiresIn: '1h'}
+      {expiresIn: 8640}
     );
-
-    return token;
-
+    return { accessToken };
   }
   
   async postData(dados) {

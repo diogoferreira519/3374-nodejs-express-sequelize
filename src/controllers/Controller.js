@@ -6,15 +6,14 @@ class Controller {
   async getAll(req, res){
     try{
       let busca = req.query.search;
-
       if (!busca){
         const listaRegistros = await this.entidadeService.getAll(req.query.page, req.query.items, req.query.order);
+   
         return res.status(200).json(listaRegistros);
       }
-      else{
-        const listaBusca = await this.entidadeService.getByDescription(req.path.slice(1), busca);
-        return res.status(200).json(listaBusca);
-      }
+      const listaBusca = await this.entidadeService.getByDescription(req.path.slice(1), busca);
+        
+      return res.status(200).json(listaBusca);
     }catch(error){
       return res.status(401).json({mensagem: error});
     }

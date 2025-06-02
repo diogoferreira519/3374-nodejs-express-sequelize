@@ -23,7 +23,7 @@ class ControllerUser extends Controller{
 
       const token = await this.entidadeService.postLogin({email, senha});
 
-      return res.status(201).json({token: token});
+      return res.status(201).send(token);
     }catch(error){
       return res.status(401).json({mensagem: error.message});
     }
