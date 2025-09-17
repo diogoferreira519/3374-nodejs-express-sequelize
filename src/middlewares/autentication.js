@@ -1,9 +1,9 @@
-const { verify, decode} = require("jsonwebtoken");
+const { verify, decode} = require('jsonwebtoken');
 
 module.exports = async (req, res, next) => {
     const token = req.headers.authorization;
 
-    if (!token || typeof(token) === undefined) {
+    if (!token || typeof(token) === 'undefined') {
        return res.status(401).send('Access token não informado');
     }
 

@@ -1,7 +1,7 @@
 const Services = require('./Services');
 const bcrypt = require('bcrypt')
 const uuid  = require('uuid');
-const dataSource = require('../models');
+const dataSource = require('../database/models');
 const jwt = require('jsonwebtoken')
 
 class ServicesUser extends Services{

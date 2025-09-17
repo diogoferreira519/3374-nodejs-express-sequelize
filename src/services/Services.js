@@ -1,17 +1,21 @@
 
 const { Op } = require('sequelize');
-const dataSource = require('../models');
+const dataSource = require('../database/models');
 class Services {
   constructor(nomeModel){
     this.model = nomeModel;
   }
 
-  async getAll(page, items, order) {
+  async getAll(page = 1, items = 10, order = 'ASC') {
     return dataSource[this.model].findAndCountAll({
       limit: items,
       offset: (Number(page) - 1) * items,
-      order: order.map(({column, asc}) => [column, asc === 'true' ? 'ASC' : 'DESC']),
+      // order: order.map(({column, asc}) => [column, asc === 'true' ? 'ASC' : 'DESC']),
     });
+  }
+
+  async getAllByScope(scope) {
+    return await dataSource[this.model].scope(scope).findAll();
   }
 
   async getByDescription(path, search){

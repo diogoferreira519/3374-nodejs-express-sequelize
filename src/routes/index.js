@@ -5,7 +5,7 @@ const categorias = require('./RouteCategoria');
 const user = require('./RouteUser');
 const login = require('./RouteLogin');
 const cors = require('cors');
-const autentication = require('../middlewares/autentication');
+// const autentication = require('../middlewares/autentication');
 
 module.exports = app =>{
   app.use(
@@ -13,7 +13,7 @@ module.exports = app =>{
     express.json(),
     user,
     login,
-    autentication,
+    // autentication,
     pessoas,
     cursos,
     categorias

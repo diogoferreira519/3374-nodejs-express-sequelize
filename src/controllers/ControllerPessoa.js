@@ -14,7 +14,16 @@ class ControllerPessoa extends Controller{
       const listaMatriculas = await servicesPessoa.getMatriculaById(Number(estudanteId));
       return res.status(200).json(listaMatriculas);
     }catch(error){
-      return res.status(400).json({mensagem: error});
+      return res.status(500).json({mensagem: error.message});
+    }
+  }
+
+  async getPessoaByScope(req, res) {
+    try{
+      const listaPessoas = await servicesPessoa.getPessoasByScope();
+      return res.status(200).json(listaPessoas);
+    }catch(error){
+      return res.status(500).json({mensagem: error.message});
     }
   }
 }
