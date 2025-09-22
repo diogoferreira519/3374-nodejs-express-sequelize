@@ -6,6 +6,6 @@ const router = Router();
 
 router.post('/user', (req, res)=> userController.post(req,res));
 router.get('/user', (req, res)=> userController.getAll(req, res));
-router.put('/user/:id', (req, res)=> userController.updateById(req, res));
+router.put('/user/:id', (req, res)=> userController.update(req, res));
 
 module.exports = router;

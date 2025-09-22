@@ -1,3 +1,4 @@
+const validadorParam = require ('../utils/conversorStringHelper.js');
 class Controller {
   constructor(entidadeService){
     this.entidadeService = entidadeService;
@@ -28,6 +29,17 @@ class Controller {
     }
   }
 
+  async getOne(req, res) {
+    try {
+      let { ...params} = req.params;
+      params = validadorParam(params);
+      const registro = await this.entidadeService.getOne(params);
+      return res.status(200).json(registro);
+    } catch(error) {
+      res.status(500).json({mensagem: error.message});
+    }
+  }
+
   async get(req, res){
     try{
       const { id } = req.params;
@@ -39,31 +51,36 @@ class Controller {
   }
 
   async exclui(req, res){
-    const { id } = req.params;
+    let { ...params } = req.params;
+    params = validadorParam(params);
     try{
-      if (id !== null ){
-        await this.entidadeService.delete(Number(id));
-        return res.status(200).json({mensagem:`id ${id} deletado com sucesso.`});
+      if (!params){
+        return res.status(500).json({mensagem: 'Parametros devem ser passados'});
       }
+      await this.entidadeService.delete(params);
+      return res.status(200).json({mensagem:`id ${params.id} deletado com sucesso.`});
     } catch(error) {
       return res.status(500).json({mensagem: error.message});
     }
   }
 
-  async updateById(req, res) {
+  async update(req, res) {
     try {
-      const { id } = req.params;
+      let { ...params } = req.params;
+      params = validadorParam(params);
       const dados = req.body;
       
-      if ( id ) {
-        const isUpdate = await this.entidadeService.update(dados, Number(id));
-
-        if (!isUpdate){
-          return res.status(400).json({message: 'registro não foi atualizado'});
-        }
-        
-        return res.status(200).json({message: 'Atualizado com sucesso'});
+      if ( !params ) {
+        return res.status(500).json({mensagem: 'Parametros devem ser passados'});
       }
+
+      const isUpdate = await this.entidadeService.update(dados, params);
+
+      if (!isUpdate){
+        return res.status(400).json({message: 'registro não foi atualizado'});
+      }
+        
+      return res.status(200).json({message: 'Atualizado com sucesso'});
     } catch(error) {
       return res.status(500).json({mensagem: error.message});
     }

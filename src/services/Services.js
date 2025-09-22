@@ -54,13 +54,33 @@ class Services {
     });
   }
 
+  async getByProp(id, prop) {
+    return await dataSource[this.model].findAll({
+      where : {
+        [prop] : id,
+      }
+    });
+  }
+
+  async getByPropWithScope(id, prop, scope) {
+    return await dataSource[this.model].scope(scope).findAll({
+      where : {
+        [prop] : id,
+      }
+    });
+  }
+
   async getById(id) {
     return dataSource[this.model].findByPk(id);
   }
 
-  async update(dados, id) {
+  async getOne(params) {
+    return dataSource[this.model].findOne({where: params});
+  }
+
+  async update(dados, where) {
     const registersUpdated = await dataSource[this.model].update(dados, {
-      where: { id }
+      where: { ...where }
     });
     return registersUpdated > 0;
   }
@@ -69,8 +89,8 @@ class Services {
     return dataSource[this.model].create(dados);
   }
 
-  async delete(id) {
-    return dataSource[this.model].destroy({ where: {id : id} });
+  async delete(params) {
+    return dataSource[this.model].destroy({ where: params });
   }
 }
 

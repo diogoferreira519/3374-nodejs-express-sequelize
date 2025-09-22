@@ -20,6 +20,16 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Matricula',
     tableName: 'matriculas',
     paranoid: true,
+    defaultScope: {
+      where: {
+        status: 'matriculado'
+      }
+    },
+    scopes: {
+      allRegistersMatricula: {
+        where: {}
+      }
+    }
   });
   return Matricula;
 };
