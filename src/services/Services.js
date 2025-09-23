@@ -7,11 +7,21 @@ class Services {
   }
 
   async getAll(page = 1, items = 10, order = 'ASC') {
-    return dataSource[this.model].findAndCountAll({
+    return await dataSource[this.model].findAndCountAll({
       limit: items,
       offset: (Number(page) - 1) * items,
       // order: order.map(({column, asc}) => [column, asc === 'true' ? 'ASC' : 'DESC']),
     });
+  }
+
+  async getAllWithWhere(where = {}) {
+    return await dataSource[this.model].findAll({
+      where: { ...where}
+    });
+  }
+
+  async getAllWithObject(object = {}) {
+    return await dataSource[this.model].findAndCountAll(object);
   }
 
   async getAllByScope(scope) {
@@ -59,6 +69,16 @@ class Services {
       where : {
         [prop] : id,
       }
+    });
+  }
+
+  async getByPropAndCount(id, prop) {
+    return await dataSource[this.model].findAndCountAll({
+      where : {
+        [prop] : id,
+      },
+      limit: 2,
+      order: [['id', 'DESC']]
     });
   }
 
